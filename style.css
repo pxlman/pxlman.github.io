@@ -5,8 +5,14 @@
   }
 
   /* Style for each div */
-  .box {
-    width: calc(33.3333% - 20px); /* One third of the viewport width with some margin */
+  .lnr {
+    width: calc(25% - 20px); /* One third of the viewport width with some margin */
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  .center {
+    width: calc(50% - 20px); /* One third of the viewport width with some margin */
     padding: 20px;
     border: 1px solid #ccc;
     box-sizing: border-box;
