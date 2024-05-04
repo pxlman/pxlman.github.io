@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Three Divs Side by Side</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
+<style>
+.container {
+    display: flex; /* Use flexbox */
+    justify-content: space-between; /* Distribute space between divs */
+    width: 100%; /* Full width of the viewport */
+  }
+
+  /* Style for each div */
+  .box {
+    width: calc(33.3333% - 20px); /* One third of the viewport width with some margin */
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+</style>
   </head>
   <body>
     <div class="container">
