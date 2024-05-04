@@ -1,14 +1,13 @@
-/* Style for the container holding the three divs */
 .container {
-  display: flex; /* Use flexbox */
-}
+    display: flex; /* Use flexbox */
+    justify-content: space-between; /* Distribute space between divs */
+    width: 100%; /* Full width of the viewport */
+  }
 
-/* Style for each div */
-.box {
-  width: 30%
-  flex: 1; /* Each div takes up equal space */
-  padding: 20px;
-  border: 1px solid #ccc;
-  margin: 10px;
-  box-sizing: border-box;
-}
+  /* Style for each div */
+  .box {
+    width: calc(33.3333% - 20px); /* One third of the viewport width with some margin */
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
