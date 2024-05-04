@@ -5,6 +5,7 @@
 
 /* Style for each div */
 .box {
+  width: 30%
   flex: 1; /* Each div takes up equal space */
   padding: 20px;
   border: 1px solid #ccc;
