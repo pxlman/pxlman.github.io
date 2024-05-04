@@ -20,6 +20,24 @@
     border: 1px solid #ccc;
     box-sizing: border-box;
   }
+  .lnr::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -10px; /* Adjust this value to control the position of the line */
+    width: 2px; /* Width of the line */
+    background-color: #ccc; /* Color of the line */
+  }
+  .lnr::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -10px; /* Adjust this value to control the position of the line */
+    width: 2px; /* Width of the line */
+    background-color: #ccc; /* Color of the line */
+  }
   .center {
     width: calc(50% - 20px); /* One third of the viewport width with some margin */
     height: 100%;
