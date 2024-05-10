@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Welcome to Doks on Blog</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content in Welcome to Doks on Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 10 May 2024 18:00:07 +0300</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Example Post</title>
+      <link>http://localhost:1313/blog/example/</link>
+      <pubDate>Thu, 07 Sep 2023 16:27:22 +0200</pubDate>
+      <guid>http://localhost:1313/blog/example/</guid>
+      <description>You can use blog posts for announcing product updates and features.</description>
+    </item>
+    <item>
+      <title>Example Guide</title>
+      <link>http://localhost:1313/docs/guides/example/</link>
+      <pubDate>Thu, 07 Sep 2023 16:04:48 +0200</pubDate>
+      <guid>http://localhost:1313/docs/guides/example/</guid>
+      <description>Guides lead a user through a specific task they want to accomplish, often with a sequence of steps. Writing a good guide requires thinking about what your users are trying to do.&#xA;Further reading Read about how-to guides in the Diátaxis framework </description>
+    </item>
+    <item>
+      <title>Example Reference</title>
+      <link>http://localhost:1313/docs/reference/example/</link>
+      <pubDate>Thu, 07 Sep 2023 16:13:18 +0200</pubDate>
+      <guid>http://localhost:1313/docs/reference/example/</guid>
+      <description>Reference pages are ideal for outlining how things work in terse and clear terms. Less concerned with telling a story or addressing a specific use case, they should give a comprehensive outline of what your documenting.&#xA;Further reading Read about reference in the Diátaxis framework </description>
+    </item>
+    <item>
+      <title>Resources</title>
+      <link>http://localhost:1313/docs/resources/</link>
+      <pubDate>Tue, 27 Feb 2024 09:30:56 +0100</pubDate>
+      <guid>http://localhost:1313/docs/resources/</guid>
+      <description>Link to valuable, relevant resources.</description>
+    </item>
+    <item>
+      <title>My First Post</title>
+      <link>http://localhost:1313/posts/my-first-post/</link>
+      <pubDate>Fri, 10 May 2024 18:00:07 +0300</pubDate>
+      <guid>http://localhost:1313/posts/my-first-post/</guid>
+      <description>head 1 subHead 1 </description>
+    </item>
+    <item>
+      <title>Privacy Policy</title>
+      <link>http://localhost:1313/privacy/</link>
+      <pubDate>Thu, 07 Sep 2023 17:19:07 +0200</pubDate>
+      <guid>http://localhost:1313/privacy/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,4 @@
+baseURL = 'https://pxlman.github.io/'
+languageCode = 'en-us'
+title = 'Blog'
+theme = 'doks'
