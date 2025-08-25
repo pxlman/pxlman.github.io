@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:atom="http://www.w3.org/2005/Atom" 
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" 
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>Writeup on pxlman</title>
+    <link>http://localhost:1313/tags/writeup/</link>
+    <description>Recent content in Writeup on pxlman</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>ahmed.kotb.7573@gmail.com (Ahmed Ashraf)</managingEditor>
+    <webMaster>ahmed.kotb.7573@gmail.com (Ahmed Ashraf)</webMaster>
+    <lastBuildDate>Mon, 25 Aug 2025 22:39:33 +0300</lastBuildDate>
+    <sy:updatePeriod>weekly</sy:updatePeriod>
+    
+        <atom:link href="http://localhost:1313/tags/writeup/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+      <item>
+        <title>Brunner</title>
+        <link>http://localhost:1313/ctfs/brunner/</link>
+        <pubDate>Mon, 25 Aug 2025 22:39:33 +0300</pubDate>
+        <author>ahmed.kotb.7573@gmail.com (Ahmed Ashraf)</author>
+        <atom:modified>Mon, 25 Aug 2025 22:39:33 +0300</atom:modified>
+        <guid>http://localhost:1313/ctfs/brunner/</guid>
+        <description></description>
+        
+        <dc:creator>Ahmed Ashraf</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>pwn</category>
+            
+          
+            
+              <category>ctf</category>
+            
+          
+            
+              <category>writeup</category>
+            
+          
+        
+        
+        
+      </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,3 @@
+[submodule "hugo-theme-zzo"]
+	path = hugo-theme-zzo
+	url = https://github.com/hegzploit/hugo-theme-zzo

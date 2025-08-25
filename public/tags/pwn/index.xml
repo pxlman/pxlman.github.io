@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:atom="http://www.w3.org/2005/Atom" 
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" 
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>Pwn on pxlman</title>
+    <link>http://localhost:1313/tags/pwn/</link>
+    <description>Recent content in Pwn on pxlman</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>ahmed.kotb.7573@gmail.com (Ahmed Ashraf)</managingEditor>
+    <webMaster>ahmed.kotb.7573@gmail.com (Ahmed Ashraf)</webMaster>
+    <lastBuildDate>Sat, 23 Aug 2025 22:39:33 +0300</lastBuildDate>
+    <sy:updatePeriod>weekly</sy:updatePeriod>
+    
+        <atom:link href="http://localhost:1313/tags/pwn/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+      <item>
+        <title>Brunner CTF 2025</title>
+        <link>http://localhost:1313/ctfs/brunner-ctf-2025/</link>
+        <pubDate>Sat, 23 Aug 2025 22:39:33 +0300</pubDate>
+        <author>ahmed.kotb.7573@gmail.com (Ahmed Ashraf)</author>
+        <atom:modified>Sat, 23 Aug 2025 22:39:33 +0300</atom:modified>
+        <guid>http://localhost:1313/ctfs/brunner-ctf-2025/</guid>
+        <description>&lt;h1 id=&#34;web&#34;&gt;Web&lt;/h1&gt;
+&lt;h2 id=&#34;caffeine-user&#34;&gt;Caffeine (User)&lt;/h2&gt;
+&lt;p&gt;While testing the &lt;code&gt;Check order status&lt;/code&gt; found that it&amp;rsquo;s just grep i right if it matches whatever like a customer name or coffee type or order id so i tried doing command injection AND WALLA &lt;code&gt;Lattee;ls&lt;/code&gt; gave me everything then made &lt;code&gt;Lattee; cat user.txt&lt;/code&gt; which had the Flag&lt;/p&gt;
+&lt;h2 id=&#34;caffeine-root&#34;&gt;Caffeine (Root)&lt;/h2&gt;
+&lt;p&gt;This was more challenging it had the flag at &lt;code&gt;/root/root.txt&lt;/code&gt; which needed from me to find a privilege escalation way to read it.&lt;br /&gt;
+When i did &lt;code&gt;sudo -l&lt;/code&gt; i found that i can use /usr/local/bin/brew with sudo so why not i did it and found that it was a fake brew that i can just do&lt;/p&gt;</description>
+        
+        <dc:creator>Ahmed Ashraf</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>web</category>
+            
+          
+            
+              <category>pwn</category>
+            
+          
+        
+        
+        
+      </item>
+    
+  </channel>
+</rss>

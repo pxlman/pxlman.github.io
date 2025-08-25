@@ -1,0 +1,14 @@
+{{ if ($.Param "enableSidebarFriendSites" | default false) }}
+{{ $friendSites := $.Site.Params.friend_sites | default ""}}
+{{ if gt (len $friendSites) 0 }}
+<div class="sidebar-recent">
+  <div class="sidebar-recent__title p2"> {{ i18n "friend-sites" | default "Friends" }} </div>
+  <ul class="sidebar-recent__ul">
+    {{ range $friendSites }}
+    <li><a href="{{ .url }}" class='sidebar-recent__ul p2'>{{ .name }}</a></li>
+    {{ end }}
+  </ul>
+</div>
+<hr class="hr-fade sidebar-hr" />
+{{ end }}
+{{ end }}
