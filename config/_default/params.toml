@@ -2,7 +2,7 @@
 #               PARAMS
 # =====================================
 logoText = " pxlman"
-logoType = "short"                  # long, short
+logoType = "long"                  # long, short
 description = "test descr"
 custom_css = []
 custom_js = []
