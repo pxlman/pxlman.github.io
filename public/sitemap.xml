@@ -41,6 +41,18 @@
     <loc>http://localhost:1313/tags/sqli/</loc>
     <lastmod>2024-08-26T01:38:14+03:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/tags/asm/</loc>
+    <lastmod>2024-06-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/notes/basic-cpu-architecure/</loc>
+    <lastmod>2024-06-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/note/</loc>
+    <lastmod>2024-06-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/notes/</loc>
+    <lastmod>2024-06-10T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
     <loc>http://localhost:1313/series/</loc>

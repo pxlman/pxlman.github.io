@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:atom="http://www.w3.org/2005/Atom" 
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" 
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>Notes on pxlman</title>
+    <link>http://localhost:1313/notes/</link>
+    <description>Recent content in Notes on pxlman</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>ahmed.kotb.7573@gmail.com (Ahmed Ashraf)</managingEditor>
+    <webMaster>ahmed.kotb.7573@gmail.com (Ahmed Ashraf)</webMaster>
+    <lastBuildDate>Mon, 10 Jun 2024 00:00:00 +0000</lastBuildDate>
+    <sy:updatePeriod>weekly</sy:updatePeriod>
+    
+        <atom:link href="http://localhost:1313/notes/index.xml" rel="self" type="application/rss+xml" />
+    
+
+      
+      <item>
+        <title>Basic Architecure</title>
+        <link>http://localhost:1313/notes/basic-cpu-architecure/</link>
+        <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
+        <author>ahmed.kotb.7573@gmail.com (Ahmed Ashraf)</author>
+        <atom:modified>Mon, 10 Jun 2024 00:00:00 +0000</atom:modified>
+        <guid>http://localhost:1313/notes/basic-cpu-architecure/</guid>
+        <description>&lt;h1 id=&#34;objectives&#34;&gt;Objectives&lt;/h1&gt;
+&lt;p&gt;Summarizing this article &lt;a href=&#34;https://revers.engineering/applied-re-basic-architecture/&#34;&gt;Basic Architecure&lt;/a&gt;&lt;br /&gt;
+We will only cover the intel x64 arch.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;General purpose registers&lt;/li&gt;
+&lt;li&gt;The processor state flag&lt;/li&gt;
+&lt;li&gt;The ISA&lt;/li&gt;
+&lt;li&gt;Virtual memory&lt;/li&gt;
+&lt;li&gt;Execution of a process on the x64 arch&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;high-level-introduction&#34;&gt;High Level Introduction&lt;/h1&gt;
+&lt;h2 id=&#34;the-compilation-process&#34;&gt;The Compilation Process&lt;/h2&gt;
+&lt;p&gt;$$\text{Source Code }\xrightarrow[]{\text{Compiler}}\text{Assembly Code }\xrightarrow[]{\text{Assembler}}\text{Object Code }\xrightarrow[\text{Libs used}]{ \text{Linker}}\text{Exec. Code}$$&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Compiler: Convert the source code to the assembly instructions&lt;/li&gt;
+&lt;li&gt;Assembler: Convert the asm instructions to object code&lt;/li&gt;
+&lt;li&gt;Linker: Convert the unusable asm code to an executable program just by linking the code with the needed libraries&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;compiled-binary-breakdown&#34;&gt;Compiled Binary BreakDown&lt;/h2&gt;
+&lt;p&gt;We will breakdown this C program that gets the physical computer name and print it out with it&amp;rsquo;s length&lt;br /&gt;
+&lt;img src=&#34;http://localhost:1313/notes/basic-cpu-architecure/example-c-code.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
+        
+        <dc:creator>Ahmed Ashraf</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>asm</category>
+            
+          
+            
+              <category>note</category>
+            
+          
+        
+        
+        
+      </item>
+      
+
+    
+  </channel>
+</rss>
