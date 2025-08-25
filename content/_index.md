@@ -1,0 +1,19 @@
+---
+header:
+  - type: text
+    height: 200
+    paddingX: 50
+    paddingY: 0
+    align: center
+    title:
+      - The amazing world of pxlman
+    subtitle:
+      - linux linux linux... :-
+    titleColor: 
+    titleShadow: true
+    titleFontSize: 44
+    subtitleColor: 
+    subtitleCursive: false
+    subtitleFontSize: 14
+    spaceBetweenTitleSubtitle: 10
+---

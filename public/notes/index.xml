@@ -21,7 +21,7 @@
 
       
       <item>
-        <title>Basic Architecure</title>
+        <title>Basics of CPU Architecure</title>
         <link>http://localhost:1313/notes/basic-cpu-architecure/</link>
         <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
         <author>ahmed.kotb.7573@gmail.com (Ahmed Ashraf)</author>
@@ -61,6 +61,10 @@ We will only cover the intel x64 arch.&lt;/p&gt;
           
             
               <category>note</category>
+            
+          
+            
+              <category>pwn</category>
             
           
         
