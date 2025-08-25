@@ -1,9 +1,9 @@
 # =====================================
 #               PARAMS
 # =====================================
-logoText = "the amazing world of the pixelated pxlman"
-logoType = "long"                  # long, short
-description = ""
+logoText = " pxlman"
+logoType = "short"                  # long, short
+description = "test descr"
 custom_css = []
 custom_js = []
 useFaviconGenerator = true          # https://www.favicon-generator.org/

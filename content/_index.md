@@ -6,7 +6,7 @@ header:
     paddingY: 0
     align: center
     title:
-      - The amazing world of pxlman
+      - Sometimes it feels like...
     subtitle:
       - linux linux linux... :-
     titleColor: 
