@@ -8,9 +8,9 @@ custom_css = []
 custom_js = []
 useFaviconGenerator = true          # https://www.favicon-generator.org/
 meta_image = "images/logo.png" # used in meta tag
-themecolor = ""
+themecolor = "hacker"
 
-themeOptions = ["dark", "light", "hacker", "solarized", "kimbie"]
+themeOptions = ["dark", "hacker", "light", "solarized", "kimbie"]
 notAllowedTypesInHome = [
     "contact",
     "talks",

@@ -1,110 +1,172 @@
+// 🎨 Semantic Palette
+$background:       #151515;   // main page background
+$background-alt:   #111;      // backdrop / overlays
+$background-dark:  #252526;   // panels / footers
+$background-darker:#0d0e0f;   // border contrast
+$surface:          #323232;   // raised elements
+$surface-alt:      #383b4c;   // share bg
+$surface-dark:     #403E41;   // switches
+$surface-deep:     #43454d;   // donations
+
+$border:           #6B6B6B;
+$border-strong:    #424242;
+$border-soft:      #616161;
+$border-outline:   rgba(239, 154, 154, 0.2);
+
+$foreground:       #FCFCFA;   // main text
+$foreground-soft:  #dbdbdb;   // lighter text
+$foreground-muted: #9e9e9e;   // icons, secondary
+$foreground-subtle:#727072;   // TOC/search
+
+// Accent colors (reds / pinks)
+$accent-strong:    #FF1744;
+$accent-primary:   #FF5252;
+$accent-secondary: #FF6F61;
+$accent-hover:     #FF8A80;
+$accent-alt:       #FFAB91;
+$accent-soft:      #E57373;
+$accent-light:     #EF9A9A;
+$accent-pale:      #FFCDD2;
+
+$accent-tag:       #F48FB1;
+$accent-rose:      #F06292;
+
+$neutral-strong:   #B71C1C;
+$neutral-muted:    #B0A0A0;
+$neutral-gray:     #bdbdbd;
+$shadow:           #888;
+
+// Alpha
+$overlay:          rgba(0, 0, 0, 0.7);
+
+// Optional “color0–15” indexing (good for terminals or consistent theme slots)
+$color0:  $background;
+$color1:  $foreground;
+$color2:  $accent-primary;
+$color3:  $accent-secondary;
+$color4:  $accent-hover;
+$color5:  $accent-alt;
+$color6:  $accent-soft;
+$color7:  $accent-light;
+$color8:  $accent-pale;
+$color9:  $accent-tag;
+$color10: $accent-rose;
+$color11: $neutral-strong;
+$color12: $neutral-gray;
+$color13: $neutral-muted;
+$color14: $foreground-muted;
+$color15: $overlay;
+
+
+// 🗺 Theme Map
 $hacker: (
-    footer-background-color: #252526,
-    footer-color: #A1AD64,
-    link: #E08C48,
-    link-hover: #C7BA00,
-    title-color: #A1AD64,
-    meta-color: #CDF5CC,
-    body-color: #1FFF2A,
-    hr-color: #6B6B6B,
-    body-background-color: #151715,
-    backdrop-background-color: #111,
-    dropdown-border-top-color: #6B6B6B,
-    dropdown-item-active-background-color: lighten(#151715, 12%),
-    dropdown-content-background-color: lighten(#151715, 5%),
-    dropdown-item-hover-background-color: lighten(#151715, 20%),
-    dropdown-item-hover-color: #E08C48,
-    dropdown-item-color: #FCFCFA,
-    navbar-border-bottom-color: #424242,
-    navbar-background-color: #252526,
-    navbar-mobile-background-color: #323232,
-    navbar-title-color: #E3CD26,
-    navbar-title-hover-color: #1FFF2A,
-    navbar-title-active-color: #f3ff6e,
-    navbar-menu-hover-background-color: lighten(#151715, 20%),
-    navbar-dropdown-item-hover-color: #E08C48,
-    sidebar-title-color: #E3CD26,
-    sidebar-li-color: #A1AD64,
-    taxo-title-color: #9c9299,
-    taxo-num-color: #E3CD26,
-    taxo-num-background-color: #252526,
-    taxo-tags-background-color: lighten(#151715, 10%),
-    taxo-tags-color: #78DCE8,
-    taxo-series-background-color: lighten(#151715, 10%),
-    taxo-series-color: #EA9C77,
-    taxo-categories-background-color: lighten(#151715, 10%),
-    taxo-categories-color: #AB9DF2,
-    breadcrumb-item-color: #E08C48,
-    breadcrumb-background-color: #252526,
-    breadcrumb-item-active-color: #bdbdbd,
-    list-header-title-color: #A1AD64,
-    figcaption-color: #1FFF2A,
-    figcaption-strong-color: #FCFCFA,
-    single-hr-background-color: #E08C48,
-    single-blockquote-border-color: #E08C48,
-    single-header-title-color: #FCFCFA,
-    single-contents-title-color: #A1AD64,
-    single-contents-subtitle-color: #FCFCFA,
-    related-header-title-color: #FCFCFA,
-    related-link-color: #C7BA00,
-    content-box-border-color: #6B6B6B,
-    content-box-background-color: #252526,
-    burger-menu-color: #dbdbdb,
-    social-icon-color: #9e9e9e,
-    social-icon-hover-color: lighten(#9e9e9e, 20%),
-    pagination-link-color: #996287,
-    pagination-background-color: #252526,
-    pagination-disabled-color: #424242,
-    pagination-number-color: #FCFCFA,
-    terms-title-color: #C7BA00,
-    terms-title-shadow-color: #252526,
-    terms-tags-color: #78DCE8,
-    terms-categories-color: #AB9DF2,
-    terms-series-color: #EA9C77,
-    terms-len-color: #E08C48,
-    toc-label-color: #727072,
-    toc-title-color: #727072,
-    toc-vertical-line: #727072,
-    toc-vertical-line-active: #E08C48,
-    toc-header-background-color: lighten(#151715, 7%),
-    toc-header-background-color-hover: lighten(#151715, 5%),
-    toc-body-background-color: lighten(#151715, 3%),
-    search-placeholder-color: #727072,
-    search-color: #1FFF2A,
-    search-icon-color: #727072,
-    search-border-color: #0d0e0f,
-    search-border-outline-color: rgba(161, 173, 100, 0.2),
-    search-border-active-color: #414141,
-    search-background-color: #252526,
-    search-content-color: #1FFF2A,
-    search-content-background-color: #252526,
-    search-hover-background-color: lighten(#252526, 14%),
-    search-highlight-color: red,
-    selection-color: #FCFCFA,
-    selection-background-color: #FF6188,
-    archive-key-color: #FCFCFA,
-    archive-type-color: #FCFCFA,
-    archive-meta-color: #E3CD26,
-    archive-key-background-color: #E08C48,
-    archive-type-background-color: #855E78,
-    archive-hover-line-color: #FF6188,
-    gtt-color: #9e9e9e,
-    gtt-background-color: #252526,
-    gtt-hover-color: #E3CD26,
-    gtt-hover-background-color: lighten(#252526, 5%),
-    switch-background-color: #403E41,
-    switch-button-color: #FCFCFA,
-    switch-active-color: #FF6188,
-    gallery-mask-color: #FCFCFA,
-    gallery-mask-background-color: rgba(0, 0, 0, 0.7),
-    contact-input-color: #FCFCFA,
-    contact-input-background-color: lighten(#252526, 4%),
-    contact-button-background-color: lighten(#252526, 4%),
-    custom-scrollbar-foreground-color: #616161,
-    custom-scrollbar-background-color: #FCFCFA,
-    share-color: #dbdbdb,
-    share-shadow-color: #888,
-    share-background-color: #383b4c,
-    donation-background-color: #43454d,
-    button-primary-color: $button_hacker_primary_color,
+  footer-background-color: $background-dark,
+  footer-color: $accent-soft,
+  link: $accent-secondary,
+  link-hover: $accent-hover,
+  title-color: $accent-light,
+  meta-color: $accent-pale,
+  body-color: $accent-primary,
+  hr-color: $neutral-strong,
+  body-background-color: $background,
+  backdrop-background-color: $background-alt,
+  dropdown-border-top-color: $border,
+  dropdown-item-active-background-color: lighten($background, 12%),
+  dropdown-content-background-color: lighten($background, 5%),
+  dropdown-item-hover-background-color: lighten($background, 20%),
+  dropdown-item-hover-color: $accent-secondary,
+  dropdown-item-color: $foreground,
+  navbar-border-bottom-color: $border-strong,
+  navbar-background-color: $background-dark,
+  navbar-mobile-background-color: $surface,
+  navbar-title-color: $accent-hover,
+  navbar-title-hover-color: $accent-primary,
+  navbar-title-active-color: $accent-alt,
+  navbar-menu-hover-background-color: lighten($background, 20%),
+  navbar-dropdown-item-hover-color: $accent-secondary,
+  sidebar-title-color: $accent-hover,
+  sidebar-li-color: $accent-soft,
+  taxo-title-color: $neutral-muted,
+  taxo-num-color: $accent-hover,
+  taxo-num-background-color: $background-dark,
+  taxo-tags-background-color: lighten($background, 10%),
+  taxo-tags-color: $accent-tag,
+  taxo-series-background-color: lighten($background, 10%),
+  taxo-series-color: $accent-light,
+  taxo-categories-background-color: lighten($background, 10%),
+  taxo-categories-color: $accent-alt,
+  breadcrumb-item-color: $accent-secondary,
+  breadcrumb-background-color: $background-dark,
+  breadcrumb-item-active-color: $neutral-gray,
+  list-header-title-color: $accent-soft,
+  figcaption-color: $accent-primary,
+  figcaption-strong-color: $foreground,
+  single-hr-background-color: $accent-secondary,
+  single-blockquote-border-color: $accent-secondary,
+  single-header-title-color: $foreground,
+  single-contents-title-color: $accent-soft,
+  single-contents-subtitle-color: $foreground,
+  related-header-title-color: $foreground,
+  related-link-color: $accent-hover,
+  content-box-border-color: $border,
+  content-box-background-color: $background-dark,
+  burger-menu-color: $foreground-soft,
+  social-icon-color: $foreground-muted,
+  social-icon-hover-color: lighten($foreground-muted, 20%),
+  pagination-link-color: $accent-rose,
+  pagination-background-color: $background-dark,
+  pagination-disabled-color: $border-strong,
+  pagination-number-color: $foreground,
+  terms-title-color: $accent-hover,
+  terms-title-shadow-color: $background-dark,
+  terms-tags-color: $accent-tag,
+  terms-categories-color: $accent-alt,
+  terms-series-color: $accent-light,
+  terms-len-color: $accent-secondary,
+  toc-label-color: $foreground-subtle,
+  toc-title-color: $foreground-subtle,
+  toc-vertical-line: $foreground-subtle,
+  toc-vertical-line-active: $accent-secondary,
+  toc-header-background-color: lighten($background, 7%),
+  toc-header-background-color-hover: lighten($background, 5%),
+  toc-body-background-color: lighten($background, 3%),
+  search-placeholder-color: $foreground-subtle,
+  search-color: $accent-primary,
+  search-icon-color: $foreground-subtle,
+  search-border-color: $background-darker,
+  search-border-outline-color: $border-outline,
+  search-border-active-color: #414141,
+  search-background-color: $background-dark,
+  search-content-color: $accent-primary,
+  search-content-background-color: $background-dark,
+  search-hover-background-color: lighten($background-dark, 14%),
+  search-highlight-color: $accent-strong,
+  selection-color: $foreground,
+  selection-background-color: $accent-primary,
+  archive-key-color: $foreground,
+  archive-type-color: $foreground,
+  archive-meta-color: $accent-hover,
+  archive-key-background-color: $accent-secondary,
+  archive-type-background-color: $neutral-strong,
+  archive-hover-line-color: $accent-primary,
+  gtt-color: $foreground-muted,
+  gtt-background-color: $background-dark,
+  gtt-hover-color: $accent-hover,
+  gtt-hover-background-color: lighten($background-dark, 5%),
+  switch-background-color: $surface-dark,
+  switch-button-color: $foreground,
+  switch-active-color: $accent-primary,
+  gallery-mask-color: $foreground,
+  gallery-mask-background-color: $overlay,
+  contact-input-color: $foreground,
+  contact-input-background-color: lighten($background-dark, 4%),
+  contact-button-background-color: lighten($background-dark, 4%),
+  custom-scrollbar-foreground-color: $border-soft,
+  custom-scrollbar-background-color: $foreground,
+  share-color: $foreground-soft,
+  share-shadow-color: $shadow,
+  share-background-color: $surface-alt,
+  donation-background-color: $surface-deep,
+  button-primary-color: $accent-strong,
 );
+

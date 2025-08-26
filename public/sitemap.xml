@@ -14,9 +14,6 @@
     <loc>http://localhost:1313/ctfs/</loc>
     <lastmod>2025-08-23T22:39:33+03:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/pwn/</loc>
-    <lastmod>2025-08-23T22:39:33+03:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/tags/</loc>
     <lastmod>2025-08-23T22:39:33+03:00</lastmod>
   </url><url>
@@ -44,13 +41,13 @@
     <loc>http://localhost:1313/tags/asm/</loc>
     <lastmod>2024-06-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/notes/basic-cpu-architecure/</loc>
+    <loc>http://localhost:1313/posts/basic-cpu-architecure/</loc>
     <lastmod>2024-06-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/note/</loc>
     <lastmod>2024-06-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/notes/</loc>
+    <loc>http://localhost:1313/tags/pwn/</loc>
     <lastmod>2024-06-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
