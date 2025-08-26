@@ -65,10 +65,6 @@ When i did &lt;code&gt;sudo -l&lt;/code&gt; i found that i can use /usr/local/bi
               <category>web</category>
             
           
-            
-              <category>pwn</category>
-            
-          
         
         
         
@@ -223,11 +219,11 @@ Then when i tried to add a null byte &lt;code&gt;%00&lt;/code&gt; it ruined the 
       
       <item>
         <title>Basics of CPU Architecure</title>
-        <link>http://localhost:1313/notes/basic-cpu-architecure/</link>
+        <link>http://localhost:1313/posts/basic-cpu-architecure/</link>
         <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
         <author>ahmed.kotb.7573@gmail.com (Ahmed Ashraf)</author>
         <atom:modified>Mon, 10 Jun 2024 00:00:00 +0000</atom:modified>
-        <guid>http://localhost:1313/notes/basic-cpu-architecure/</guid>
+        <guid>http://localhost:1313/posts/basic-cpu-architecure/</guid>
         <description>&lt;h1 id=&#34;objectives&#34;&gt;Objectives&lt;/h1&gt;
 &lt;p&gt;Summarizing this article &lt;a href=&#34;https://revers.engineering/applied-re-basic-architecture/&#34;&gt;Basic Architecure&lt;/a&gt;&lt;br /&gt;
 We will only cover the intel x64 arch.&lt;/p&gt;
@@ -256,7 +252,7 @@ We will only cover the intel x64 arch.&lt;/p&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;compiled-binary-breakdown&#34;&gt;Compiled Binary BreakDown&lt;/h2&gt;
 &lt;p&gt;We will breakdown this C program that gets the physical computer name and print it out with it&amp;rsquo;s length&lt;br /&gt;
-&lt;img src=&#34;http://localhost:1313/notes/basic-cpu-architecure/example-c-code.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
+&lt;img src=&#34;http://localhost:1313/posts/basic-cpu-architecure/example-c-code.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
         
         <dc:creator>Ahmed Ashraf</dc:creator>
         

