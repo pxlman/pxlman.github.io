@@ -1,4 +1,20 @@
 {{ define "main" }}
+<style>
+.MathJax_Display {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-width: 100%;
+  max-height: 400px;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.MathJax_Display > .MathJax {
+  max-height: 100%;
+  min-width: min-content;
+}
+
+</style>
 
 <main class="single__main {{ if or ($.Param "enableToc") ($.Param "toc") }}{{ if $.Param "hideToc" }}main{{ else if eq ($.Param "tocPosition") "outer" }}main{{ else }}main-main{{ end }}{{ else }}main{{ end }}">
   {{ if $.Param "enableBreadcrumb" }}
@@ -113,9 +129,7 @@
 <script src="{{ relURL (printf " %s%s" "dist/" .) }}"></script>
 {{ end }}
 
-<script type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} })
 </script>

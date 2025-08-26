@@ -1612,6 +1612,22 @@
 </nav>
             
             
+<style>
+.MathJax_Display {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-width: 100%;
+  max-height: 400px;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.MathJax_Display > .MathJax {
+  max-height: 100%;
+  min-width: min-content;
+}
+
+</style>
 
 <main class="single__main main">
   
@@ -1696,7 +1712,15 @@ We will only cover the intel x64 arch.</p>
 <h1 id="high-level-introduction">High Level Introduction</h1>
 <h2 id="the-compilation-process">The Compilation Process</h2>
 <p>$$\text{Source Code }\xrightarrow[]{\text{Compiler}}\text{Assembly Code }\xrightarrow[]{\text{Assembler}}\text{Object Code }\xrightarrow[\text{Libs used}]{ \text{Linker}}\text{Exec. Code}$$</p>
-<ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-latex" data-lang="latex"><span class="line"><span class="cl"><span class="k">\text</span><span class="nb">{</span>Source Code <span class="nb">}</span><span class="k">\xrightarrow</span><span class="na">[]</span><span class="nb">{</span><span class="k">\text</span><span class="nb">{</span>Compiler<span class="nb">}}</span><span class="k">\text</span><span class="nb">{</span>Assembly Code <span class="nb">}</span><span class="k">\xrightarrow</span><span class="na">[]</span><span class="nb">{</span><span class="k">\text</span><span class="nb">{</span>Assembler<span class="nb">}}</span><span class="k">\text</span><span class="nb">{</span>Object Code <span class="nb">}</span><span class="k">\xrightarrow</span><span class="na">[\text{Libs used}]</span><span class="nb">{</span> <span class="k">\text</span><span class="nb">{</span>Linker<span class="nb">}}</span><span class="k">\text</span><span class="nb">{</span>Exec. Code<span class="nb">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
 <li>Compiler: Convert the source code to the assembly instructions</li>
 <li>Assembler: Convert the asm instructions to object code</li>
 <li>Linker: Convert the unusable asm code to an executable program just by linking the code with the needed libraries</li>
@@ -2677,9 +2701,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-<script type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} })
 </script>

@@ -21,6 +21,9 @@ We will only cover the intel x64 arch.
 
 ## The Compilation Process
 $$\text{Source Code }\xrightarrow[]{\text{Compiler}}\text{Assembly Code }\xrightarrow[]{\text{Assembler}}\text{Object Code }\xrightarrow[\text{Libs used}]{ \text{Linker}}\text{Exec. Code}$$
+```latex
+\text{Source Code }\xrightarrow[]{\text{Compiler}}\text{Assembly Code }\xrightarrow[]{\text{Assembler}}\text{Object Code }\xrightarrow[\text{Libs used}]{ \text{Linker}}\text{Exec. Code}
+```
 1. Compiler: Convert the source code to the assembly instructions
 2. Assembler: Convert the asm instructions to object code
 3. Linker: Convert the unusable asm code to an executable program just by linking the code with the needed libraries
