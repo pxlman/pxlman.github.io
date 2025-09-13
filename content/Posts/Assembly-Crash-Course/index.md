@@ -8,7 +8,7 @@ tags = ['assembly', 'linux', 'web', 'pwn']
 
 ---
 
-# 🛰️ Assembly-Powered Web Server — Expanded Writeup
+# 🛰️ Assembly Web Server
 
 You can do the task with solving the challenge in module `Building a web server` in dojo `Computing 101` in [pwn.college](https://pwn.college/). The original code is [here i think](./web-server.s).
 
@@ -16,7 +16,7 @@ You can do the task with solving the challenge in module `Building a web server`
 
 ---
 
-## 🔧 Syscall patterns & "if" checks in assembly
+## 🔧 Syscall patterns
 
 In your server most syscalls are used without robust error checks. Here’s a standard pattern to check result and branch on error (pseudo-assembly):
 
@@ -43,7 +43,7 @@ Use these around `socket`, `bind`, `listen`, `accept`, `open`, `read`, `write`, 
 
 ---
 
-## 🧩 Socket creation (`socket`) — assembly + C equivalent + options
+## 🧩 Socket creation
 
 Assembly in your code:
 
@@ -76,7 +76,7 @@ You can find more at `man 2 socket`.
 
 ---
 
-## 📍 Bind (`bind`) — crafting sockaddr + error checking
+## 📍 Bind — crafting sockaddr
 
 You already build the `sockaddr_in` on the stack. After syscall:
 ```asm 
@@ -113,7 +113,7 @@ For another address like `127.0.0.1` for the localhost, you’d write `0x7F00000
 
 ---
 
-## 🗣️ Listen (`listen`)
+## 🗣️ Listen
 
 Assembly:
 
@@ -130,7 +130,7 @@ Assembly:
 
 ---
 
-## 🤝 Accept (`accept`)
+## 🤝 Accept
 
 Assembly:
 
@@ -149,7 +149,7 @@ This waits for an incoming connection and returns a new socket fd for that clien
 ---
 
 
-## 👨‍👩‍👧‍👦 Forking vs alternatives
+## 👨‍👩‍👧‍👦 Forking
 
 Your server calls `fork()` per connection:
 
@@ -174,7 +174,7 @@ Assembly:
 
 ---
 
-## 📖 Read / Parse request (`read`)
+## 📖 Read / Parse request
 
 ### Reading the request to the stack
 Assembly:
@@ -276,7 +276,7 @@ POST path (your code writes uploaded body to file):
 
 ---
 
-## 🧪 Debugging & inspection tools (because output without `strace` is just wishful thinking)
+## 🧪 Debugging & inspection tools
 
 * `strace -f ./yourserver` — see syscalls and arguments. Amazing for syscall-level debugging.
 * `ltrace` — library calls.
