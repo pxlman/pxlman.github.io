@@ -1,5 +1,5 @@
 +++
-date = '2024-09-14T11:38:14+03:00'
+date = '2025-09-14T11:38:14+03:00'
 draft = false
 title = 'Assembly Crash Course (pwn.college)'
 description = 'An explanation for the assembly web server i made as a challenge in pwn.college'
