@@ -262,10 +262,51 @@ write(client, buf, r);
 close(f);
 ```
 
+Assembly code:
+```asm
+# open ( r8, 0, 0)
+	mov rdi, r8
+	mov rsi, 0
+	mov rdx, 0
+	mov rax, 2
+	syscall
+	add rsp, 512
+# read (open, rsp, 512)
+	mov rdi, rax
+	sub rsp, 512
+	lea rsi, [rsp]
+	mov rdx, 512
+	push rax
+	mov rax, 0
+	syscall
+# close (open)
+	pop rdi
+	push rax
+	mov rax, 3
+	syscall
+# write (accept, 200ok, 19)
+	mov rdi, [rsp+520]
+	lea rsi, OKAYMSG # this is defined at the start of the file
+	mov rdx, 19
+	mov rax, 1
+	syscall
+# write (accept, text, 512) writing the file content to the client meaning sending it basically
+	mov rdi, qword ptr [rsp+520] # 512 (read buffer) + 8 (openfile fd)
+	lea rsi, [rsp+8]
+	mov rdx, qword ptr [rsp]
+	mov rax, 1
+	syscall
+	add rsp, 512 # cleaning up the stack from the read buffer
+	add rsp, 8 # cleaning up the stack from the openfile fd
+	jmp neither
+```
+
 POST path (your code writes uploaded body to file):
 
 * Consider `open(path, O_CREAT|O_WRONLY|O_TRUNC, 0644)` — create or truncate and set permissions.
 * Use `write` loop: `while (left) { ssize_t w = write(...); handle partial writes }`
+
+> You can read the POST part from the source code it's similar idea but with addition to reading the body of the request it's a tough part to implement correctly so you can enjoy understanding it urself :)
 
 ---
 
