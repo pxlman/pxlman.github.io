@@ -14,6 +14,10 @@ You can do the task with solving the challenge in module `Building a web server`
 
 > Quick reminder: Linux syscalls return values in `rax`. On success it's non-negative. On error the kernel returns `-errno` (a negative value). In assembly you usually test `rax` and jump if negative. Think: the kernel is passive-aggressively telling you what went wrong — you must check.
 
+### 📚 How to “understand” each syscall better
+1. Your syscalls companion is [x64.syscall.sh](https://x64.syscall.sh/) then use the rule number two `man 2 <SYSCALL>` 
+2. `man 2 socket` / `man 2 bind` / `man 2 listen` / `man 2 accept` — kernel API manpages; start here.
+
 ---
 
 ## 🔧 Syscall patterns
@@ -199,20 +203,19 @@ child:
 ```asm
 # Getting requested path
 	xor rbx, rbx
-	xor rcx, rcx
+	xor rcx, rcx # making rbx,rcx zero
 findfirstspace:
-	mov bl, [rsp+rcx]
+	mov bl, [rsp+rcx] # read 1 byte at rsp+rcx into bl (which is the accepted request)
 	inc rcx
 	cmp bl, ' '
 	jne findfirstspace
 	mov r8, rcx
-	add r8, rsp
+	add r8, rsp # r8 = rsp+rcx now points to the path start
 findsecondspace:
 	mov bl, [rsp+rcx]
 	inc rcx
 	cmp bl, ' '
-	je foundsecondspace
-	jmp findsecondspace
+	jne findsecondspace
 foundsecondspace:
 	sub rcx, 1
 	mov byte ptr [rsp+rcx], 0x0 # null terminate the path. with this the r8=rsp+rcx is starting at the path and ends with the null terminator here and this is how C strings work
@@ -284,7 +287,3 @@ POST path (your code writes uploaded body to file):
 
 ---
 
-## 📚 How to “understand” each syscall better
-
-1. `man 2 socket` / `man 2 bind` / `man 2 listen` / `man 2 accept` — kernel API manpages; start here.
-2. Your syscalls companion is [x64.syscall.sh](https://x64.syscall.sh/) with `man 2 <SYSCALL>` 
