@@ -16,7 +16,7 @@ links:
 
 ## PWN
 
-### Challenge 1: pwn1 (500 points)
+### Challenge 1: pwn1 (481 points)
 
 First looking at the functions found this looking like the flag is loaded in `.bss` section.
 ![](./load_flag.png)
@@ -57,6 +57,8 @@ struct FILE {
     char *_IO_buf_end;   /* End of reserve area. */
 }
 ```
+> [read more](https://hackmd.io/@v13td0x/FileStructure)
+
 We can see that the first 8 bytes is the flags field, which is used to determine the mode of the file (read, write, etc).
 So we need it to be 7 to be in write mode.
 Then we can set the `write_ptr` to point to the flag location in `.bss` and `write_end` to point to the end of the flag location.
@@ -101,7 +103,7 @@ print(p.recvline())
 HORRAY
 ![](./flag1.png)
 
-## Challenge 2: pwn2 (500 points)
+## Challenge 2: pwn3 (464 points)
 Getting a straight forward buffer overflow at `local_98`
 ```c
 local_c = 3;
