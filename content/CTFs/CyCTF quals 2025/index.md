@@ -1,7 +1,7 @@
 ---
 date: '2025-11-07'
 title: "CyCTF 2025 quals"
-description: "Writeup for CyCTF 2025 quals of solving 2 pwn and 1 misc challenges with total of 1300 points."
+description: "Writeup for CyCTF 2025 quals of solving 2 pwn and 1 misc challenges."
 tags:
   - "pwn"
   - "misc"
