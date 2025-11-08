@@ -19,7 +19,7 @@ links:
 ### Challenge 1: pwn1 (481 points)
 
 First looking at the functions found this looking like the flag is loaded in `.bss` section.
-![](./load_flag.png)
+![](./load_flag1.png)
 
 When launching the binary we get a menu:
 ```bash
