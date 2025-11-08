@@ -166,3 +166,9 @@ print(io.recv())
 io.interactive()
 ```
 ![](./pwn3_flag.png)
+
+## misc
+
+### Challenge 3: Atomic (281 points)
+
+Soon (server is down there)...
