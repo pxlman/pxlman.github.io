@@ -15,7 +15,7 @@ tags:
 
 > Environment: Bootlin embedded Linux QEMU labs — `vexpress-v2p-ca9` (ARM Cortex-A9), U-Boot, Buildroot. The goal is to replace the NFS root + TFTP kernel delivery with a self-contained `sd.img` that holds everything.
 
-## 0. Notes before reading
+### 0. Notes before reading
 
 u need to have these variables in hand first:
 1. *KERNEL_DIR*: the path where u cloned the linux kernel source code from github `git clone blabla/linux` this path should end with `linux/`
@@ -29,7 +29,7 @@ For u to understand our initial state in the course
 **tftp**: we used to use this service to share specific file like the last two i mentioned
 **nfsroot**: this is the root dir for the machine root that was shared using a service **NFS** that make a remote file system so u can access any file or directory so fast
 
-## Part 1 — How the old NFS + TFTP style works
+### Part 1 — How the old NFS + TFTP style works
 
 Before changing anything, it helps to understand exactly what each piece of the old setup was doing and how they connected.
 
