@@ -10,7 +10,7 @@ useFaviconGenerator = true          # https://www.favicon-generator.org/
 meta_image = "images/logo.png" # used in meta tag
 themecolor = "hacker"
 
-themeOptions = ["dark", "hacker", "light", "solarized", "kimbie"]
+themeOptions = ["hacker", "dark", "light", "solarized", "kimbie"]
 notAllowedTypesInHome = [
     "contact",
     "talks",
