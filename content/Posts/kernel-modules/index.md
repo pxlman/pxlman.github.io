@@ -1,5 +1,5 @@
 ---
-title: "Kernel Module 101: hello.ko → What's Next"
+title: "Kernel Module 101: hello.ko → What's Next?"
 date: 2026-04-21
 description: A summary for the basics of kernel modules
 tags:

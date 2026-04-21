@@ -293,6 +293,13 @@ sync
 | U-Boot `bootargs`                   | Mostly yes                   | `mmcblk0p2` may be `mmcblk1p2` on some boards |
 
 ---
+If you reached this you should thank Allah for this gift
+>  قامَ النَّبيُّ صلَّى اللهُ عليه وسلَّم حتَّى تَورَّمَت قدَماه، فقيلَ له: غَفَرَ اللهُ لكَ ما تَقدَّمَ مِن ذَنبِكَ وما تَأخَّرَ،
+>   قال: أفلا أكونُ **عَبدًا** **شَكورًا**.
+
+>   وهذا هو تمام الشكر, **العبادة**
+
+---
 
 ## Quick reference
 
