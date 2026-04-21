@@ -11,10 +11,14 @@
             "id": "f51d699585b507a6",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Posts/sdcard-squshfs/index.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "index"
             }
           }
         ]
@@ -163,5 +167,12 @@
     }
   },
   "active": "f51d699585b507a6",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "_index.md",
+    "Posts/sdcard-squshfs/index.md",
+    "Posts/kernel-modules/index.md",
+    "Posts/basic-cpu-architecure/index.md",
+    "Posts/sdcard-squshfs",
+    "Posts/kernel-modules"
+  ]
 }
