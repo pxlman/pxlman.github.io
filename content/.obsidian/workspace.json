@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Posts/kernel-modules/index.md",
+                "file": "Posts/sdcard-squshfs/index.md",
                 "mode": "source",
                 "source": false
               },
@@ -168,8 +168,8 @@
   },
   "active": "f51d699585b507a6",
   "lastOpenFiles": [
-    "Posts/sdcard-squshfs/index.md",
     "Posts/kernel-modules/index.md",
+    "Posts/sdcard-squshfs/index.md",
     "_index.md",
     "Posts/basic-cpu-architecure/index.md",
     "Posts/sdcard-squshfs",

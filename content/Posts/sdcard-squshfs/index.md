@@ -15,7 +15,7 @@ tags:
 
 > Environment: Bootlin embedded Linux QEMU labs — `vexpress-v2p-ca9` (ARM Cortex-A9), U-Boot, Buildroot. The goal is to replace the NFS root + TFTP kernel delivery with a self-contained `sd.img` that holds everything.
 
-# 0. Notes before reading
+## 0. Notes before reading
 
 u need to have these variables in hand first:
 1. *KERNEL_DIR*: the path where u cloned the linux kernel source code from github `git clone blabla/linux` this path should end with `linux/`
@@ -60,7 +60,7 @@ Before changing anything, it helps to understand exactly what each piece of the 
 └─────────────────────────────────────────────────────┘
 ```
 
-### What each component was responsible for
+#### What each component was responsible for
 
 | Component         | Role                                                    | Lives on                   |
 | ----------------- | ------------------------------------------------------- | -------------------------- |
@@ -69,21 +69,21 @@ Before changing anything, it helps to understand exactly what each piece of the 
 | U-Boot `bootargs` | Tells the kernel where to find rootfs (`root=/dev/nfs`) | U-Boot env                 |
 | Kernel            | Mounts NFS as `/` at init time                          | QEMU guest RAM             |
 
-### Why this works well for development
+#### Why this works well for development
 
 - You edit files on your host and the guest sees them immediately — no copy step
 - Kernel modules (`.ko`) drop straight into the NFS dir and `insmod` finds them
 - No storage device to manage
 
-### Why it doesn't work on a real board
+#### Why it doesn't work on a real board
 
 A real embedded board sitting on a desk has no Ethernet connection to your laptop's NFS server. Even if it does, NFS is fragile in production — a network hiccup kills the root filesystem. Real products boot from local storage.
 
 ---
 
-## Part 2 — The new style: everything in `sd.img`
+### Part 2 — The new style: everything in `sd.img`
 
-### The two-partition layout
+#### The two-partition layout
 
 `sd.img` is a raw disk image with a partition table. Two partitions, two jobs:
 
@@ -97,7 +97,7 @@ sd.img
       └── [your entire rootfs, compressed]
 ```
 
-#### Partition 1 — FAT32 boot partition
+##### Partition 1 — FAT32 boot partition
 
 U-Boot's `fatload` command can only read FAT filesystems. This partition is the handoff point between U-Boot and the kernel: U-Boot reads `zImage` and the DTB from here into RAM, then jumps to the kernel entry point.
 
@@ -106,7 +106,7 @@ U-Boot's `fatload` command can only read FAT filesystems. This partition is the 
 - **Who reads it:** U-Boot only
 - **After boot:** The kernel never touches p1 again
 
-#### Partition 2 — SquashFS root filesystem
+##### Partition 2 — SquashFS root filesystem
 
 SquashFS is a read-only compressed filesystem. The kernel mounts this as `/` — it is the entire userland: BusyBox, libraries, `/etc`, your kernel modules, everything.
 
@@ -119,9 +119,9 @@ SquashFS is a read-only compressed filesystem. The kernel mounts this as `/` —
 
 ---
 
-## Part 3 — The commands, explained one by one
+### Part 3 — The commands, explained one by one
 
-### Step 1 — Pack the NFS root into a SquashFS image
+#### Step 1 — Pack the NFS root into a SquashFS image
 
 ```bash
 mksquashfs tinysystem/nfsroot rootfs.sqsh -noappend
@@ -137,7 +137,7 @@ This produces a single file that is a byte-for-byte SquashFS volume. No partitio
 
 ---
 
-### Step 2 — Attach `sd.img` to a loop device
+#### Step 2 — Attach `sd.img` to a loop device
 
 ```bash
 sudo losetup -fP --show sd.img
@@ -154,7 +154,7 @@ After this, the kernel sees `sd.img` as if it were a real block device with part
 
 ---
 
-### Step 3 — Mount p1 and copy the kernel + DTB
+#### Step 3 — Mount p1 and copy the kernel + DTB
 
 ```bash
 mkdir /mnt/xxx
@@ -169,7 +169,7 @@ p1 is FAT32, so a normal `mount` works. You're writing the two files that U-Boot
 
 ---
 
-### Step 4 — Write the SquashFS image raw into p2
+#### Step 4 — Write the SquashFS image raw into p2
 
 ```bash
 sudo dd if=rootfs.sqsh of=/dev/loop0p2 bs=1M status=progress
@@ -190,7 +190,7 @@ This is a **raw write** — `dd` copies bytes directly, no filesystem is created
 
 ---
 
-### Step 5 — Unmount and detach the loop device
+#### Step 5 — Unmount and detach the loop device
 
 ```bash
 sudo umount /dev/loop0p1
@@ -201,7 +201,7 @@ Detaching the loop device releases `sd.img` so QEMU can open it exclusively.
 
 ---
 
-### Step 6 — U-Boot environment in QEMU
+#### Step 6 — U-Boot environment in QEMU
 
 ```
 => setenv bootargs console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=squashfs rootwait rw
@@ -237,35 +237,35 @@ fatload mmc 0:1 0x61000000 zImage
 
 ---
 
-## Part 4 — Would this work on a real SD card and a real board?
+### Part 4 — Would this work on a real SD card and a real board?
 
 **Short answer: yes, with conditions.**
 
-### What would transfer directly
+#### What would transfer directly
 
 The partition layout, the SquashFS image, and the U-Boot environment are all architecture-agnostic concepts. If your real board meets the conditions below, the same `sd.img` would work.
 
-### Conditions for a real board
+#### Conditions for a real board
 
-#### Architecture must match
+##### Architecture must match
 
 The `zImage` in p1 was compiled for `ARM` (Cortex-A9, `arm-linux-gnueabihf`). If your real board is also Cortex-A9 (or a compatible ARMv7-A core), the binary will execute. A Cortex-A53 (ARMv8) board would need a recompiled kernel.
 
-#### DTB must match the real board
+##### DTB must match the real board
 
 `vexpress-v2p-ca9.dtb` describes the Versatile Express reference board — a virtual board that only exists inside QEMU. A real board has a different memory map, different peripheral addresses, different interrupt assignments.
 
 **You must use the DTB for your actual board.** This is the single biggest difference. Put the correct `.dtb` in p1 and update `bootcmd` to load it by name.
 
-#### U-Boot must support `fatload mmc`
+##### U-Boot must support `fatload mmc`
 
 Most modern U-Boot builds do, but some minimal configurations disable MMC support. Verify with `help fatload` at the U-Boot prompt.
 
-#### `mmcblk0p2` must be the right device node
+##### `mmcblk0p2` must be the right device node
 
 On some boards the SD card is `mmcblk1` (if `mmcblk0` is eMMC). Check `ls /dev/mmcblk*` on a running system or read the board's U-Boot documentation.
 
-#### Writing to a real SD card
+##### Writing to a real SD card
 
 Replace the loop device with the real card:
 
@@ -281,7 +281,7 @@ sudo dd if=rootfs.sqsh of=/dev/sdX2 bs=1M status=progress
 sync
 ```
 
-### Summary table
+#### Summary table
 
 | Thing                               | Works on real board?         | Notes                                         |
 | ----------------------------------- | ---------------------------- | --------------------------------------------- |
@@ -301,7 +301,7 @@ If you reached this you should thank Allah for this gift
 
 ---
 
-## Quick reference
+### Quick reference
 
 ```bash
 # 1. Build SquashFS from NFS root
@@ -340,7 +340,7 @@ boot
 
 ---
 
-## References
+### References
 
 - [Bootlin Embedded Linux Lab materials](https://bootlin.com/training/embedded-linux/)
 - [SquashFS documentation — kernel.org](https://www.kernel.org/doc/html/latest/filesystems/squashfs.html)
