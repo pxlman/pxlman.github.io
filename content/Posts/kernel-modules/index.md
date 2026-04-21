@@ -11,22 +11,22 @@ tags:
   - bootlin
 ---
 
-# Objectives
+## Objectives
 We will show and explain a bit for Why/How to implement a kernel module not a normal C program that run as a service in the user-space
 
 > **Audience:** Colleagues who have the [Bootlin embedded Linux labs](https://bootlin.com/training/embedded-linux/) running locally and want to write their first kernel module.
 
 ---
 
-# 0. What differs from computer to another?
+### 0. What differs from computer to another?
 There are some variables that change from one person to another depending on the environment he have made through the course till now so u need to have these variables in hand first:
 1. *KERNEL_DIR*: the path where u cloned the linux kernel source code from github `git clone blabla/linux` this path should end with `linux/`
 2. *YOUR_NAME*: of course my name is different than u unless u r me who is reading this (this variables line is just for u to be happy bit it's not important :3 )
 3. *NFSROOT*: this is the root itself for ur target machine (usually it's inside tinysystem i think but it completely depends on ur style then)
-## 1. Write the module
+### 1. Write the module
 These files `hello.c` and `Makefile` can be in whatever place u like to program them in can be on ur home directory or ur table or in the garden as if u can build them and copy the `hello.ko` to the *NFSROOT* dir
 
-### `hello.c`
+#### `hello.c`
 
 Every kernel module needs an `init` and an `exit` function, plus a license declaration. That's it for a minimal module.
 
@@ -57,7 +57,7 @@ void cleanup_module(void){
 
 ---
 
-### `Makefile`
+#### `Makefile`
 
 The Bootlin labs use a Buildroot-generated toolchain. Point `KERNELDIR` at the kernel build tree that Buildroot produced.
 
@@ -78,7 +78,7 @@ clean:
 
 ---
 
-### Build output
+#### Build output
 Inside that path u were developing the module:
 ```bash
 $ make
@@ -92,9 +92,9 @@ hello.ko: ELF 32-bit LSB relocatable, ARM, ...
 
 ---
 
-## 2. Deploy via NFS root
+### 2. Deploy via NFS root
 
-### How the Bootlin QEMU lab works
+#### How the Bootlin QEMU lab works
 
 The guest boots with its root filesystem served over NFS from your **host machine**. This means you can place files into the NFS export directory on your host and the running guest sees them instantly — no reflashing, no rebuilding an image.
 
@@ -113,7 +113,7 @@ QEMU guest
 
 ---
 
-### Step 1 — Copy `hello.ko` into the NFS root (on your host)
+#### Step 1 — Copy `hello.ko` into the NFS root (on your host)
 
 ```bash
 cp hello.ko ${NFSROOT}/
@@ -122,7 +122,7 @@ cp hello.ko ${NFSROOT}/
 
 ---
 
-### Step 2 — Load and verify (inside the QEMU serial console)
+#### Step 2 — Load and verify (inside the QEMU serial console)
 
 ```bash
 # Load the module
@@ -144,7 +144,7 @@ $ dmesg | tail -1
 
 ---
 
-### Troubleshooting
+#### Troubleshooting
 
 | Error                       | Likely cause                                    | Fix                                                        |
 | --------------------------- | ----------------------------------------------- | ---------------------------------------------------------- |
@@ -154,21 +154,21 @@ $ dmesg | tail -1
 
 ---
 
-## 3. What's next?
+### 3. What's next?
 
 You have a working kernel module. Here's what to build next — from immediately useful to deeply educational.
 
 ---
 
-### For gamers / latency-sensitive use cases
+#### For gamers / latency-sensitive use cases
 
-#### Custom input remapper (evdev hook)
+##### Custom input remapper (evdev hook)
 
 Hook into the `evdev` layer at kernel level to remap gamepad buttons or inject key events globally — before any userspace application sees them. No software overhead, works in every app, survives window manager restarts.
 
 **Key concepts:** `input_handler`, `input_dev`, `input_event()`
 
-#### CPU governor / scheduler tuner
+##### CPU governor / scheduler tuner
 
 Write a `sysfs` interface that lets you switch CPU frequency scaling policy at runtime, or force the scheduler to elevate a specific PID's priority — effectively a real-time gaming mode toggle.
 
@@ -176,15 +176,15 @@ Write a `sysfs` interface that lets you switch CPU frequency scaling policy at r
 
 ---
 
-### For power users
+#### For power users
 
-#### Filesystem watcher (VFS hooks)
+##### Filesystem watcher (VFS hooks)
 
 Hook VFS layer operations to watch any directory for file creates, deletes, and renames — faster and more reliable than `inotify` for custom build systems or sync tools.
 
 **Key concepts:** `fsnotify`, `dentry` operations, `inode` hooks
 
-#### Network traffic shaper (Netfilter)
+##### Network traffic shaper (Netfilter)
 
 Use Netfilter hooks to inspect, drop, or rewrite packets in-kernel. Block specific apps from the network, QoS a torrent client, or build a custom firewall rule engine.
 
@@ -192,9 +192,9 @@ Use Netfilter hooks to inspect, drop, or rewrite packets in-kernel. Block specif
 
 ---
 
-### Foundations (learn these first if you want to go deep)
+#### Foundations (learn these first if you want to go deep)
 
-#### Virtual character device (`/dev/mything`)
+##### Virtual character device (`/dev/mything`)
 
 Create a character device your userspace programs can `open()`, `read()`, and `write()`. This is the building block for hardware drivers, shared-memory IPC, and custom kernel interfaces.
 
@@ -210,7 +210,7 @@ static struct file_operations hello_fops = {
 };
 ```
 
-#### kprobes / eBPF companion
+##### kprobes / eBPF companion
 
 Attach to any kernel function at runtime and log its arguments without rebooting. Use kprobes directly in a module, or as a stepping stone to writing eBPF programs with full kernel visibility.
 
@@ -218,7 +218,7 @@ Attach to any kernel function at runtime and log its arguments without rebooting
 
 ---
 
-## Learning path
+### Learning path
 
 ```
 hello.ko
@@ -233,7 +233,7 @@ Each step teaches a new kernel subsystem and each one is independently useful in
 
 ---
 
-## Quick reference
+### Quick reference
 
 ```bash
 # Build
@@ -257,7 +257,7 @@ modinfo /root/hello.ko
 
 ---
 
-## References
+### References
 
 - [Bootlin Embedded Linux Lab materials](https://bootlin.com/training/embedded-linux/)
 - [Linux Kernel Module Programming Guide](https://sysprog21.github.io/lkmpg/)
