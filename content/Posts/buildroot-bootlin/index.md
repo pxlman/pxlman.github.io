@@ -7,6 +7,8 @@ draft: false
 ---
 ### This article should be explaining the original [html](/buildroot.html) the TA Ahmed Ehab made
 
+<a href="./buildroot.html">first </a>
+<a href="/buildroot.html"> second</a>
 
 > **Who this is for:** Colleagues who have completed or are working through the Bootlin embedded Linux QEMU labs and want to understand the *reasoning* behind each step, not just the commands.
 > **Environment:** `vexpress-v2p-ca9` (ARM Cortex-A9), U-Boot, Buildroot 2026.02.1, Linux 6.19.12.
