@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Posts/kernel-modules/index.md",
+                "file": "Posts/buildroot-bootlin/index.md",
                 "mode": "source",
                 "source": false
               },
@@ -166,10 +166,13 @@
       "bases:Create new base": false
     }
   },
-  "active": "f51d699585b507a6",
+  "active": "6c76e61a806f74a6",
   "lastOpenFiles": [
-    "Posts/sdcard-squshfs/index.md",
+    "Posts/buildroot-bootlin/buildroot.html",
+    "Posts/buildroot-bootlin/Buildroot_Academic_Execution_Presentation_Responsive.html",
     "Posts/kernel-modules/index.md",
+    "Posts/buildroot-bootlin/index.md~",
+    "Posts/sdcard-squshfs/index.md",
     "_index.md",
     "Posts/basic-cpu-architecure/index.md",
     "Posts/sdcard-squshfs",
