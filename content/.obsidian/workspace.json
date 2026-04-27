@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "index"
             }
+          },
+          {
+            "id": "32388f37ccec0373",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Posts/buildroot-bootlin/index.md",
+                "mode": "source",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "index"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -166,15 +181,16 @@
       "bases:Create new base": false
     }
   },
-  "active": "6c76e61a806f74a6",
+  "active": "32388f37ccec0373",
   "lastOpenFiles": [
+    "Posts/basic-cpu-architecure/index.md",
+    "Posts/buildroot-bootlin/index.md",
     "Posts/buildroot-bootlin/buildroot.html",
     "Posts/buildroot-bootlin/Buildroot_Academic_Execution_Presentation_Responsive.html",
     "Posts/kernel-modules/index.md",
     "Posts/buildroot-bootlin/index.md~",
     "Posts/sdcard-squshfs/index.md",
     "_index.md",
-    "Posts/basic-cpu-architecure/index.md",
     "Posts/sdcard-squshfs",
     "Posts/kernel-modules"
   ]
