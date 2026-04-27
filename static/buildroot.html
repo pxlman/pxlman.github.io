@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Buildroot Embedded Linux Execution Manual</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #111936;
+      --panel2: #172142;
+      --ink: #eef3ff;
+      --muted: #aab7d8;
+      --line: #2b3d70;
+      --accent: #2f80ed;
+      --accent2: #00b894;
+      --warn: #f2994a;
+      --danger: #eb5757;
+      --ok: #27ae60;
+      --code: #0c1229;
+      --paper: #f8fafc;
+      --shadow: 0 22px 70px rgba(0,0,0,.38);
+      --radius: 24px;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+              "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --serif: Georgia, "Times New Roman", serif;
+      --slide-w: min(96vw, 1440px);
+      --slide-h: min(88vh, calc(var(--slide-w) * 9 / 16));
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(47,128,237,.28), transparent 32%),
+        radial-gradient(circle at 90% 85%, rgba(0,184,148,.18), transparent 30%),
+        var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: radial-gradient(circle at center, black 0, transparent 78%);
+      pointer-events: none;
+    }
+
+    .deck {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: clamp(10px, 2vw, 26px);
+    }
+
+    .slide {
+      width: var(--slide-w);
+      height: var(--slide-h);
+      max-height: 94vh;
+      overflow: hidden;
+      display: none;
+      position: relative;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.06), transparent 26%),
+        linear-gradient(180deg, var(--panel), #0f1731 70%);
+      padding: clamp(24px, 4vw, 62px);
+    }
+
+    .slide.active { display: flex; flex-direction: column; }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 8px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: .9;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: clamp(12px, 2vh, 28px);
+    }
+
+    .kicker {
+      color: var(--accent2);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: clamp(.72rem, 1.1vw, .96rem);
+      font-weight: 700;
+      margin-bottom: .45em;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      max-width: 980px;
+      font-size: clamp(2.2rem, 5vw, 5.7rem);
+      line-height: .95;
+      letter-spacing: -.055em;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 3.4vw, 3.6rem);
+      line-height: 1.02;
+      letter-spacing: -.045em;
+      max-width: 980px;
+    }
+
+    h3 {
+      font-size: clamp(1.1rem, 2vw, 1.75rem);
+      line-height: 1.2;
+      letter-spacing: -.02em;
+    }
+
+    p, li, td, th {
+      font-size: clamp(.95rem, 1.25vw, 1.28rem);
+      line-height: 1.48;
+      color: var(--muted);
+    }
+
+    .lead {
+      max-width: 1000px;
+      font-size: clamp(1.05rem, 1.6vw, 1.55rem);
+      line-height: 1.45;
+      color: #dce6ff;
+      margin-top: 1rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: .55em .9em;
+      border-radius: 999px;
+      background: rgba(47,128,237,.15);
+      border: 1px solid rgba(47,128,237,.38);
+      color: #dbeafe;
+      font-size: clamp(.76rem, 1vw, .94rem);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(14px, 2vw, 24px);
+      min-height: 0;
+    }
+
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 18px;
+      padding: clamp(14px, 2vw, 24px);
+      min-width: 0;
+    }
+
+    .card strong { color: var(--ink); }
+    .card p { margin-top: .55rem; }
+
+    .number {
+      width: 2.1em;
+      height: 2.1em;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      font-weight: 800;
+      margin-bottom: .75rem;
+    }
+
+    pre {
+      font-family: var(--mono);
+      font-size: clamp(.66rem, 1.05vw, 1.05rem);
+      line-height: 1.38;
+      color: #e8f0ff;
+      background: rgba(5,10,25,.86);
+      border: 1px solid rgba(255,255,255,.12);
+      border-left: 5px solid var(--accent2);
+      border-radius: 16px;
+      padding: clamp(12px, 1.65vw, 22px);
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      tab-size: 2;
+      max-height: 62vh;
+      min-width: 0;
+    }
+
+    .terminal-title {
+      font-family: var(--mono);
+      font-size: clamp(.78rem, 1vw, 1rem);
+      color: #9fdcc9;
+      margin-bottom: -10px;
+      padding-left: 12px;
+    }
+
+    .note, .warning, .danger, .success {
+      border-radius: 18px;
+      padding: clamp(14px, 2vw, 22px);
+      border: 1px solid rgba(255,255,255,.14);
+      font-size: clamp(.95rem, 1.18vw, 1.22rem);
+      line-height: 1.45;
+    }
+    .note { background: rgba(47,128,237,.12); border-left: 6px solid var(--accent); }
+    .warning { background: rgba(242,153,74,.13); border-left: 6px solid var(--warn); }
+    .danger { background: rgba(235,87,87,.12); border-left: 6px solid var(--danger); }
+    .success { background: rgba(39,174,96,.12); border-left: 6px solid var(--ok); }
+
+    ul { margin: .35rem 0 0 1.2rem; padding: 0; }
+    li { margin: .35rem 0; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      font-size: clamp(.8rem, 1.05vw, 1rem);
+    }
+
+    th, td {
+      padding: clamp(9px, 1.1vw, 15px);
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,.11);
+      vertical-align: top;
+    }
+    th { color: var(--ink); background: rgba(47,128,237,.16); }
+    td code, p code, li code {
+      font-family: var(--mono);
+      background: rgba(255,255,255,.09);
+      color: #d5f5e8;
+      padding: .08em .32em;
+      border-radius: 6px;
+      word-break: break-word;
+    }
+
+    .diagram {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: clamp(8px, 1.5vw, 18px);
+      margin: clamp(18px, 3vh, 34px) 0;
+      flex-wrap: wrap;
+    }
+
+    .node {
+      min-width: clamp(130px, 14vw, 210px);
+      padding: clamp(13px, 1.8vw, 22px);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(47,128,237,.18), rgba(255,255,255,.05));
+      border: 1px solid rgba(255,255,255,.14);
+      text-align: center;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .arrow {
+      display: grid;
+      place-items: center;
+      color: var(--accent2);
+      font-size: clamp(1.5rem, 3vw, 2.6rem);
+      font-weight: 900;
+    }
+
+    .footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      color: #8fa0ca;
+      font-size: clamp(.72rem, .9vw, .95rem);
+    }
+
+    .progress-wrap {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      height: 5px;
+      background: rgba(255,255,255,.08);
+      z-index: 20;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width .2s ease;
+    }
+
+    .nav {
+      position: fixed;
+      right: clamp(10px, 2vw, 24px);
+      bottom: clamp(16px, 3vh, 32px);
+      display: flex;
+      gap: 10px;
+      z-index: 22;
+    }
+
+    .nav button {
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(17,25,54,.84);
+      color: var(--ink);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-weight: 800;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+
+    .slide-number {
+      position: fixed;
+      left: clamp(10px, 2vw, 24px);
+      bottom: clamp(16px, 3vh, 32px);
+      color: var(--muted);
+      font-size: .95rem;
+      z-index: 22;
+      background: rgba(17,25,54,.72);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 10px 14px;
+      border-radius: 14px;
+      backdrop-filter: blur(8px);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: clamp(16px, 3vw, 36px);
+      min-height: 0;
+    }
+
+    .small { font-size: clamp(.82rem, 1vw, 1.05rem); }
+    .accent { color: var(--accent2); }
+    .warn-text { color: var(--warn); }
+    .ok-text { color: #7ee2a8; }
+
+    @media (max-width: 900px) {
+      html, body { overflow: hidden; }
+      :root { --slide-w: 96vw; --slide-h: 92vh; }
+      .slide { padding: 22px; border-radius: 18px; }
+      .grid, .grid.three, .grid.four, .two-col { grid-template-columns: 1fr; }
+      .slide-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+      pre { max-height: 48vh; }
+      .nav { right: 10px; bottom: 12px; }
+      .slide-number { left: 10px; bottom: 12px; }
+      .footer { display: none; }
+    }
+
+    @media (max-width: 520px) {
+      .deck { padding: 8px; }
+      .slide { padding: 18px; }
+      h1 { font-size: clamp(2rem, 12vw, 3rem); }
+      h2 { font-size: clamp(1.55rem, 8vw, 2.2rem); }
+      p, li { font-size: .96rem; }
+      pre { font-size: .72rem; }
+      .nav button { padding: 8px 10px; }
+    }
+
+    @media print {
+      html, body { overflow: visible; background: white; color: black; }
+      .deck { display: block; padding: 0; }
+      .slide {
+        display: flex !important;
+        width: 100%; height: auto; min-height: 100vh;
+        page-break-after: always;
+        box-shadow: none;
+        border: 0;
+        border-radius: 0;
+        background: white;
+        color: black;
+      }
+      .slide::after, .nav, .slide-number, .progress-wrap { display: none; }
+      p, li, td, th { color: #222; }
+      pre { color: #111; background: #f3f4f6; border-color: #ddd; }
+      .card, .note, .warning, .danger, .success { border-color: #ccc; background: #f8fafc; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" id="deck">
+
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <div class="kicker">Embedded Linux · Buildroot · QEMU ARM</div>
+          <h1>Buildroot Execution Manual</h1>
+          <p class="lead">A comprehensive academic and professional guide for
+            configuring, building, deploying, and validating a Buildroot-based
+            embedded Linux system on the Bootlin QEMU ARM environment.</p>
+        </div>
+        <span class="badge">Single-file responsive HTML</span>
+      </div>
+      <div class="diagram">
+        <div class="node">Configure</div><div class="arrow">→</div>
+        <div class="node">Build</div><div class="arrow">→</div>
+        <div class="node">Deploy</div><div class="arrow">→</div>
+        <div class="node">Validate</div>
+      </div>
+      <div class="footer"><span>Advanced Operating Systems Lab</span><span>Buildroot 2026.02.1 workflow</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Purpose</div><h2>What this presentation covers</h2></div><span class="badge">Execution focused</span></div>
+      <div class="grid three">
+        <div class="card"><div class="number">1</div><h3>Correct Buildroot configuration</h3><p>Target architecture, external toolchain, kernel, packages, filesystem images, and root password.</p></div>
+        <div class="card"><div class="number">2</div><h3>Complete command sequence</h3><p>Commands are provided step by step from cloning Buildroot to booting from SD.</p></div>
+        <div class="card"><div class="number">3</div><h3>Debugging and validation</h3><p>Includes verification commands, login recovery, shadow-file issues, and runtime checks.</p></div>
+      </div>
+      <div class="note">The goal is not only to make the system boot, but to understand each generated component and validate it systematically.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Mental model</div><h2>Buildroot is a system generator</h2></div></div>
+      <div class="diagram">
+        <div class="node">Buildroot<br/>.config</div><div class="arrow">→</div>
+        <div class="node">Toolchain<br/>Kernel<br/>Packages</div><div class="arrow">→</div>
+        <div class="node">RootFS<br/>Images</div><div class="arrow">→</div>
+        <div class="node">Target<br/>System</div>
+      </div>
+      <div class="grid">
+        <div class="card"><h3>Manual rootfs</h3><p>Useful for learning and experimentation. You manually copy files, libraries, scripts, and web pages.</p></div>
+        <div class="card"><h3>Buildroot rootfs</h3><p>Reproducible and automated. The system is generated from configuration and package selections.</p></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Directory map</div><h2>Working paths used in this lab</h2></div><span class="badge">Use exact paths</span></div>
+      <pre>PROJECT=~/Desktop/embedded-linux-qemu-labs
+BOOT=$PROJECT/bootloader
+BUILDROOT=$PROJECT/buildroot/buildroot
+ROOTFS=$PROJECT/buildroot-rootfs
+TINY=$PROJECT/tinysystem/nfsroot
+SD=$BOOT/sd.img</pre>
+      <div class="warning">When a command depends on the current directory, the slide explicitly shows the <code>cd</code> command first. Do not run deployment commands from an unknown directory.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">SD card architecture</div><h2>The deployment layout</h2></div></div>
+      <div class="grid three">
+        <div class="card"><h3>Partition 1</h3><p><strong>FAT</strong><br/>Stores <code>zImage</code>, <code>vexpress-v2p-ca9.dtb</code>, and U-Boot environment.</p></div>
+        <div class="card"><h3>Partition 2</h3><p><strong>SquashFS</strong><br/>Read-only root filesystem. Stable, compressed, and appropriate for embedded systems.</p></div>
+        <div class="card"><h3>Partition 3</h3><p><strong>ext4</strong><br/>Writable data partition for persistent files if needed.</p></div>
+      </div>
+      <pre>U-Boot → FAT p1 → zImage + DTB
+Kernel → SquashFS p2 → root filesystem
+Runtime data → ext4 p3 when needed</pre>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Toolchain inspection</div><h2>Know the toolchain before configuring Buildroot</h2></div></div>
+      <pre>arm-linux-gcc --version
+
+/home/ahmed/x-tools/arm-training-linux-musleabihf/bin/arm-linux-gcc \
+  --version</pre>
+      <div class="grid">
+        <div class="card"><h3>Example result</h3><p>If the version is <code>14.3.0</code>, choose <code>External toolchain gcc version = 14.x</code>.</p></div>
+        <div class="card"><h3>Why this matters</h3><p>Buildroot validates the external toolchain. A wrong GCC version selection stops the build early.</p></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">C library and headers</div><h2>Verify sysroot, C library, and kernel headers</h2></div></div>
+      <pre>arm-linux-gcc -print-sysroot
+
+ls $(arm-linux-gcc -print-sysroot)/lib
+
+find $(arm-linux-gcc -print-sysroot)/usr/include \
+  -name version.h | grep linux</pre>
+      <div class="success">In this setup, the C library is <code>musl</code>, and the kernel headers series used by the external toolchain is <code>6.1.x</code>.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Step 1</div><h2>Create the Buildroot workspace</h2></div></div>
+      <pre>cd ~/Desktop/embedded-linux-qemu-labs
+mkdir -p buildroot
+cd buildroot</pre>
+      <div class="note">Keeping Buildroot inside the lab directory makes all later commands predictable and avoids path mistakes.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Step 2</div><h2>Clone Buildroot</h2></div></div>
+      <pre>git clone https://gitlab.com/buildroot.org/buildroot.git
+cd buildroot</pre>
+      <div class="warning">If the clone already exists, do not clone again into the same directory. Enter the existing directory and run <code>git status</code>.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Step 3</div><h2>Select the tested Buildroot release</h2></div></div>
+      <pre>git checkout 2026.02.1</pre>
+      <div class="grid">
+        <div class="card"><h3>Why not random master?</h3><p>A release tag is stable and easier to reproduce during labs and grading.</p></div>
+        <div class="card"><h3>Kernel note</h3><p>With this release, the generated Linux kernel in your successful build was <code>6.19.12</code>.</p></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Step 4</div><h2>Open Buildroot configuration</h2></div></div>
+      <pre>make menuconfig</pre>
+      <div class="note">Use arrow keys to navigate, Space to select features, Enter to open menus, and Save before exiting.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Target options</div><h2>Configure the ARM Cortex-A9 target</h2></div></div>
+      <table>
+        <tr><th>Menu item</th><th>Value</th></tr>
+        <tr><td>Target Architecture</td><td>ARM (little endian)</td></tr>
+        <tr><td>Target Architecture Variant</td><td>cortex-A9</td></tr>
+        <tr><td>Enable NEON SIMD extension</td><td>enabled</td></tr>
+        <tr><td>Enable VFP extension</td><td>enabled</td></tr>
+        <tr><td>Target ABI</td><td>EABIhf</td></tr>
+        <tr><td>Floating point strategy</td><td>VFPv3-D16</td></tr>
+      </table>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Toolchain</div><h2>Use the external crosstool-NG toolchain</h2></div></div>
+      <table>
+        <tr><th>Menu item</th><th>Value</th></tr>
+        <tr><td>Toolchain type</td><td>External toolchain</td></tr>
+        <tr><td>Toolchain</td><td>Custom toolchain</td></tr>
+        <tr><td>Toolchain path</td><td><code>/home/ahmed/x-tools/arm-training-linux-musleabihf</code></td></tr>
+        <tr><td>External toolchain gcc version</td><td>14.x</td></tr>
+        <tr><td>Kernel headers series</td><td>6.1.x</td></tr>
+        <tr><td>C library</td><td>musl</td></tr>
+        <tr><td>SSP support</td><td>enabled</td></tr>
+        <tr><td>C++ support</td><td>enabled</td></tr>
+      </table>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Kernel</div><h2>Enable Linux kernel build</h2></div></div>
+      <table>
+        <tr><th>Menu item</th><th>Value</th></tr>
+        <tr><td>Linux Kernel</td><td>enabled</td></tr>
+        <tr><td>Kernel version</td><td>latest / 6.19 with 2026.02.1</td></tr>
+        <tr><td>Kernel configuration</td><td>Using in-tree defconfig</td></tr>
+        <tr><td>Defconfig name</td><td><code>vexpress</code></td></tr>
+        <tr><td>Build a Device Tree Blob</td><td>enabled</td></tr>
+        <tr><td>In-tree DTS file names</td><td><code>arm/vexpress-v2p-ca9</code></td></tr>
+      </table>
+      <div class="warning">The path <code>arm/vexpress-v2p-ca9</code> is required with newer kernel trees because the DTS file is under <code>arch/arm/boot/dts/arm/</code>.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Packages</div><h2>Select required target packages</h2></div></div>
+      <pre>Target packages  ---&gt;
+  BusyBox
+  System tools  ---&gt;
+    [*] htop
+
+  Audio and video applications  ---&gt;
+    alsa-utils
+      [*] alsamixer
+      [*] speaker-test
+    mpd
+      [*] alsa
+      [*] vorbis
+      [*] tcp sockets
+    mpd-mpc</pre>
+      <div class="note"><code>htop</code> is useful for comparison and system inspection. For the assignment, students should still implement their own Mini-HTOP logic from <code>/proc</code>.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">BusyBox</div><h2>Enable BusyBox httpd</h2></div></div>
+      <pre>make busybox-menuconfig</pre>
+      <pre>Networking Utilities  ---&gt;
+  [*] httpd</pre>
+      <div class="success">After saving, Buildroot will generate BusyBox with the <code>httpd</code> applet enabled.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Login</div><h2>Set a root password cleanly</h2></div></div>
+      <pre>make menuconfig</pre>
+      <pre>System configuration  ---&gt;
+  [*] Enable root login with password
+  Root password</pre>
+      <div class="danger">Selecting “Enable root login with password” is not enough. The password field must contain a real password value, for example <code>root</code>.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Filesystem image</div><h2>Enable tar root filesystem image</h2></div></div>
+      <pre>Filesystem images  ---&gt;
+  [*] tar the root filesystem</pre>
+      <p class="lead">The generated <code>rootfs.tar</code> will later be extracted, customized, converted to SquashFS, and written to SD partition 2.</p>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Build</div><h2>Build the complete system</h2></div></div>
+      <pre>make -j$(nproc)</pre>
+      <div class="grid">
+        <div class="card"><h3>Meaning</h3><p><code>-j$(nproc)</code> uses all available CPU cores to speed up compilation.</p></div>
+        <div class="card"><h3>Your working variant</h3><pre>make ARCH=arm CROSS_COMPILE=arm-linux- -j$(nproc)</pre></div>
+      </div>
+      <div class="note">For Buildroot, <code>make -j$(nproc)</code> is normally enough because target architecture and toolchain are stored in <code>.config</code>.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Output</div><h2>Inspect generated Buildroot directories</h2></div></div>
+      <pre>cd ~/Desktop/embedded-linux-qemu-labs/buildroot/buildroot/output
+ls</pre>
+      <pre>build  host  images  staging  target</pre>
+      <div class="grid three">
+        <div class="card"><h3>images</h3><p>Final artifacts: kernel, DTB, and root filesystem images.</p></div>
+        <div class="card"><h3>target</h3><p>Runtime root filesystem tree before image generation.</p></div>
+        <div class="card"><h3>host / staging</h3><p>Build tools and development sysroot used during compilation.</p></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Verify images</div><h2>Check kernel, DTB, and rootfs</h2></div></div>
+      <pre>ls -lh images
+file images/zImage</pre>
+      <pre>rootfs.tar
+zImage
+vexpress-v2p-ca9.dtb
+
+images/zImage: Linux kernel ARM boot executable zImage (little-endian)</pre>
+      <div class="success">These files confirm that Buildroot generated the deployable system components.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Verify packages</div><h2>Confirm httpd and htop were built</h2></div></div>
+      <pre>cd ~/Desktop/embedded-linux-qemu-labs/buildroot/buildroot
+
+find output/target -name "htop"
+find output/target -name "httpd"
+
+grep -n "CONFIG_HTTPD=y" output/build/busybox-*/.config</pre>
+      <pre>output/target/usr/bin/htop
+output/target/usr/sbin/httpd
+890:CONFIG_HTTPD=y</pre>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Prepare deployment rootfs</div><h2>Extract rootfs.tar safely</h2></div></div>
+      <pre>cd ~/Desktop/embedded-linux-qemu-labs
+
+sudo rm -rf buildroot-rootfs rootfs.sqsh
+mkdir buildroot-rootfs
+
+sudo tar xvf buildroot/buildroot/output/images/rootfs.tar \
+  -C buildroot-rootfs
+
+sudo chown -R $USER:$USER buildroot-rootfs
+chown -R $USER:$USER buildroot-rootfs</pre>
+      <div class="warning">The ownership step is important. Without it, <code>mksquashfs</code> may fail to read files such as <code>/etc/shadow</code>.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Password validation</div><h2>Verify /etc/shadow before SquashFS</h2></div></div>
+      <pre>cat buildroot-rootfs/etc/shadow</pre>
+      <div class="grid">
+        <div class="card"><h3>Good sign</h3><p>The root line contains a password hash such as <code>root:$5$...</code>.</p></div>
+        <div class="card"><h3>Bad sign</h3><p>If <code>/etc/shadow</code> is empty or unreadable, login will fail even if menuconfig had a password.</p></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Manual password repair</div><h2>Fix shadow only if required</h2></div></div>
+      <pre>cd ~/Desktop/embedded-linux-qemu-labs/buildroot-rootfs
+
+mkpasswd -m sha-256 root
+
+nano etc/shadow</pre>
+      <pre>Example root line format:
+root:$5$xxxxxxxxxxxxxxxxxxxxxxxxxxxx:0:0:99999:7:::</pre>
+      <div class="warning">Only use this step if the shadow file is empty or corrupted. If Buildroot already generated a valid hash, do not edit it manually.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Custom files</div><h2>Add lab-specific web and assignment files</h2></div></div>
+      <pre>cd ~/Desktop/embedded-linux-qemu-labs
+
+sudo cp -r tinysystem/nfsroot/www buildroot-rootfs/
+sudo cp -r tinysystem/nfsroot/deadlock buildroot-rootfs/
+
+sudo cp tinysystem/nfsroot/usr/bin/mini_htop_v2 \
+  buildroot-rootfs/usr/bin/</pre>
+      <div class="note">This is a quick and practical workflow. In production, Buildroot overlays are preferred for reproducibility.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Web test page</div><h2>Create a minimal index.html if needed</h2></div></div>
+      <pre>cd ~/Desktop/embedded-linux-qemu-labs
+
+mkdir -p buildroot-rootfs/www/cgi-bin
+
+tee buildroot-rootfs/www/index.html &gt; /dev/null &lt;&lt;'EOF'
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Buildroot Web Test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Buildroot httpd is working&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+EOF</pre>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Startup script</div><h2>Add S99custom to mount filesystems and run httpd</h2></div></div>
+      <pre>nano buildroot-rootfs/etc/init.d/S99custom</pre>
+      <pre>#!/bin/sh
+
+mount -t proc none /proc 2&gt;/dev/null
+mount -t sysfs none /sys 2&gt;/dev/null
+mount -t devtmpfs devtmpfs /dev 2&gt;/dev/null
+
+ifconfig eth0 192.168.0.100 up
+
+mkdir -p /www
+/usr/sbin/httpd -h /www
+
+exit 0</pre>
+      <pre>chmod +x buildroot-rootfs/etc/init.d/S99custom</pre>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">SquashFS</div><h2>Create the final root filesystem image</h2></div></div>
+      <pre>cd ~/Desktop/embedded-linux-qemu-labs
+
+rm -f rootfs.sqsh
+mksquashfs buildroot-rootfs rootfs.sqsh -noappend</pre>
+      <div class="danger">Do not ignore this error: <code>Failed to read file buildroot-rootfs/etc/shadow</code>. If it appears, fix ownership and regenerate SquashFS.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Loop device</div><h2>Attach the SD image safely</h2></div></div>
+      <pre>cd ~/Desktop/embedded-linux-qemu-labs/bootloader
+
+LOOP=$(sudo losetup -fP --show sd.img)
+echo $LOOP</pre>
+      <div class="note">Do not hard-code <code>/dev/loop6</code>. The loop number changes from machine to machine and from run to run.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Write rootfs</div><h2>Write SquashFS to partition 2</h2></div></div>
+      <pre>sudo dd if=~/Desktop/embedded-linux-qemu-labs/rootfs.sqsh \
+  of=${LOOP}p2 bs=1M status=progress
+
+sync</pre>
+      <div class="warning">Make sure <code>${LOOP}p2</code> exists. If not, detach the loop device and attach again with <code>-fP</code>.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Boot partition</div><h2>Copy kernel and DTB to FAT partition 1</h2></div></div>
+      <pre>sudo mkdir -p /mnt/boot
+sudo mount ${LOOP}p1 /mnt/boot
+
+sudo cp ~/Desktop/embedded-linux-qemu-labs/buildroot/buildroot/output/images/zImage \
+  /mnt/boot/
+
+sudo cp ~/Desktop/embedded-linux-qemu-labs/buildroot/buildroot/output/images/vexpress-v2p-ca9.dtb \
+  /mnt/boot/
+
+sync
+sudo umount /mnt/boot
+sudo losetup -d $LOOP</pre>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">QEMU script</div><h2>Run QEMU with audio disabled</h2></div></div>
+      <pre>cd ~/Desktop/embedded-linux-qemu-labs/bootloader
+./run6-qemu.sh</pre>
+      <pre>sudo qemu-system-arm \
+  -M vexpress-a9 \
+  -m 128M \
+  -nographic \
+  -kernel u-boot/u-boot \
+  -sd sd.img \
+  -net tap,script=./qemu-myifup \
+  -net nic \
+  -audio none</pre>
+      <div class="success">The <code>-audio none</code> option removes repeated ALSA host audio warnings and makes the console cleaner.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">U-Boot</div><h2>Set the normal SD boot command</h2></div></div>
+      <pre>setenv bootcmd 'fatload mmc 0:1 0x61000000 zImage; fatload mmc 0:1 0x62000000 vexpress-v2p-ca9.dtb; bootz 0x61000000 - 0x62000000'
+
+setenv bootargs 'console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=squashfs rootwait rw'
+
+saveenv
+reset</pre>
+      <div class="note">Use this command for normal boot and login. Do not save <code>init=/bin/sh</code> unless you intentionally want debug mode.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Debug mode</div><h2>Temporary login bypass</h2></div></div>
+      <pre>setenv bootargs 'console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=squashfs rootwait rw init=/bin/sh'
+boot</pre>
+      <pre>mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t devtmpfs devtmpfs /dev
+ifconfig eth0 192.168.0.100 up</pre>
+      <div class="warning">This is for debugging only. It bypasses normal init and login, so startup scripts may not run automatically.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Runtime validation</div><h2>Test the generated system inside QEMU</h2></div></div>
+      <pre>login: root
+password: root
+
+which htop
+which httpd
+
+htop
+ps | grep httpd
+
+/usr/sbin/httpd -h /www</pre>
+      <div class="success">If <code>htop</code> opens and <code>httpd</code> is running, the selected Buildroot packages are present and executable.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Host validation</div><h2>Verify the web server from Ubuntu</h2></div></div>
+      <pre>curl http://192.168.0.100/index.html</pre>
+      <p class="lead">You may also open the same address in the host browser:</p>
+      <pre>http://192.168.0.100/index.html</pre>
+      <div class="warning">If this fails, verify that QEMU networking is configured and that <code>eth0</code> is up inside the target.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Failure scenario</div><h2>Login still fails after setting password</h2></div></div>
+      <div class="danger">Most likely cause: <code>/etc/shadow</code> was not copied correctly into SquashFS because of file ownership or permissions.</div>
+      <pre>cat buildroot-rootfs/etc/shadow
+
+mksquashfs buildroot-rootfs rootfs.sqsh -noappend</pre>
+      <table>
+        <tr><th>Symptom</th><th>Fix</th></tr>
+        <tr><td><code>Failed to read file .../etc/shadow</code></td><td>Run <code>sudo chown -R $USER:$USER buildroot-rootfs</code> then rebuild SquashFS.</td></tr>
+        <tr><td>root/root fails</td><td>Verify root hash exists in <code>buildroot-rootfs/etc/shadow</code>.</td></tr>
+      </table>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Failure scenario</div><h2>Kernel panic: cannot mount root filesystem</h2></div></div>
+      <pre>VFS: Cannot open root device
+Please append a correct root= boot option</pre>
+      <div class="grid">
+        <div class="card"><h3>Cause</h3><p>Missing or wrong <code>root=</code> in U-Boot <code>bootargs</code>.</p></div>
+        <div class="card"><h3>Fix</h3><pre>setenv bootargs 'console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=squashfs rootwait rw'
+saveenv
+reset</pre></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Failure scenario</div><h2>DTB build error in newer kernels</h2></div></div>
+      <pre>No rule to make target 'arch/arm/boot/dts/vexpress-v2p-ca9.dtb'</pre>
+      <div class="success">Fix the Buildroot DTS field to:</div>
+      <pre>arm/vexpress-v2p-ca9</pre>
+      <p class="lead">The older lab name was <code>vexpress-v2p-ca9</code>, but newer kernel trees store the file under the <code>arm/</code> subdirectory.</p>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Failure scenario</div><h2>External toolchain mismatch</h2></div></div>
+      <table>
+        <tr><th>Error</th><th>Meaning</th><th>Action</th></tr>
+        <tr><td>Expected GCC 12.x, got 14.3.0</td><td>Wrong GCC version selected.</td><td>Choose <code>14.x</code>.</td></tr>
+        <tr><td>Expected headers 6.12.x, got 6.1.x</td><td>Wrong kernel headers series.</td><td>Choose <code>6.1.x</code>.</td></tr>
+        <tr><td>C library mismatch</td><td>Wrong libc selected.</td><td>Select <code>musl</code>.</td></tr>
+      </table>
+      <pre>arm-linux-gcc --version
+arm-linux-gcc -print-sysroot</pre>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Failure scenario</div><h2>Loop device mistakes</h2></div></div>
+      <div class="danger">Do not assume the loop device number. Never blindly write to <code>/dev/loop6p2</code> unless <code>echo $LOOP</code> actually printed <code>/dev/loop6</code>.</div>
+      <pre>losetup -a | grep sd.img
+
+sudo losetup -d /dev/loopX</pre>
+      <pre>LOOP=$(sudo losetup -fP --show sd.img)
+echo $LOOP</pre>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Failure scenario</div><h2>init=/bin/sh and missing /proc</h2></div></div>
+      <pre>fopen /proc/stat: No such file or directory
+fopen /proc/meminfo: No such file or directory</pre>
+      <div class="note">This happens because <code>init=/bin/sh</code> bypasses normal init scripts.</div>
+      <pre>mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t devtmpfs devtmpfs /dev</pre>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Buildroot overlay note</div><h2>The cleaner long-term method</h2></div></div>
+      <p class="lead">Manual copying into <code>buildroot-rootfs</code> works for labs. For a reproducible engineering workflow, use a Buildroot root filesystem overlay.</p>
+      <pre>System configuration  ---&gt;
+  Root filesystem overlay directories</pre>
+      <pre>~/Desktop/embedded-linux-qemu-labs/my-overlay</pre>
+      <div class="diagram"><div class="node">overlay/etc</div><div class="node">overlay/www</div><div class="node">overlay/usr/bin</div><div class="arrow">→</div><div class="node">Generated rootfs</div></div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Cheat sheet</div><h2>Full successful command sequence</h2></div></div>
+      <pre>cd ~/Desktop/embedded-linux-qemu-labs/buildroot/buildroot
+make busybox-menuconfig
+make menuconfig
+make -j$(nproc)
+
+cd ~/Desktop/embedded-linux-qemu-labs
+sudo rm -rf buildroot-rootfs rootfs.sqsh
+mkdir buildroot-rootfs
+sudo tar xvf buildroot/buildroot/output/images/rootfs.tar \
+  -C buildroot-rootfs
+sudo chown -R $USER:$USER buildroot-rootfs
+cat buildroot-rootfs/etc/shadow
+
+sudo cp -r tinysystem/nfsroot/www buildroot-rootfs/
+sudo cp -r tinysystem/nfsroot/deadlock buildroot-rootfs/
+sudo cp tinysystem/nfsroot/usr/bin/mini_htop_v2 \
+  buildroot-rootfs/usr/bin/
+
+mksquashfs buildroot-rootfs rootfs.sqsh -noappend</pre>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Cheat sheet</div><h2>Deploy to SD and boot</h2></div></div>
+      <pre>cd ~/Desktop/embedded-linux-qemu-labs/bootloader
+
+LOOP=$(sudo losetup -fP --show sd.img)
+echo $LOOP
+
+sudo dd if=~/Desktop/embedded-linux-qemu-labs/rootfs.sqsh \
+  of=${LOOP}p2 bs=1M status=progress
+sync
+
+sudo mkdir -p /mnt/boot
+sudo mount ${LOOP}p1 /mnt/boot
+sudo cp ~/Desktop/embedded-linux-qemu-labs/buildroot/buildroot/output/images/zImage \
+  /mnt/boot/
+sudo cp ~/Desktop/embedded-linux-qemu-labs/buildroot/buildroot/output/images/vexpress-v2p-ca9.dtb \
+  /mnt/boot/
+sync
+sudo umount /mnt/boot
+sudo losetup -d $LOOP
+
+./run6-qemu.sh</pre>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Final validation</div><h2>What success looks like</h2></div></div>
+      <div class="grid three">
+        <div class="card"><h3>Boot</h3><p>The kernel mounts <code>/dev/mmcblk0p2</code> as SquashFS and reaches login.</p></div>
+        <div class="card"><h3>Login</h3><p><code>root/root</code> works, unless debug mode <code>init=/bin/sh</code> is used.</p></div>
+        <div class="card"><h3>Applications</h3><p><code>htop</code> runs, <code>httpd</code> serves <code>/www</code>, and the browser opens the target web page.</p></div>
+      </div>
+      <pre>which htop
+which httpd
+curl http://192.168.0.100/index.html</pre>
+    </section>
+
+    <section class="slide">
+      <div class="slide-header"><div><div class="kicker">Closing</div><h2>Key engineering lessons</h2></div></div>
+      <div class="grid">
+        <div class="card"><h3>Buildroot gives reproducibility</h3><p>Configuration drives the system. Avoid random manual changes when a reproducible overlay can be used.</p></div>
+        <div class="card"><h3>Deployment requires discipline</h3><p>Always verify paths, loop devices, <code>/etc/shadow</code>, kernel image, DTB, and U-Boot bootargs.</p></div>
+      </div>
+      <div class="success">A correct embedded Linux workflow is not just “it boots”; it is: build, inspect, deploy, validate, and debug with evidence.</div>
+    </section>
+
+  </main>
+
+  <div class="slide-number" id="slideNumber"></div>
+  <div class="nav" aria-label="presentation navigation">
+    <button id="prevBtn" title="Previous slide">←</button>
+    <button id="nextBtn" title="Next slide">→</button>
+  </div>
+  <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let idx = 0;
+
+    function show(i) {
+      idx = Math.max(0, Math.min(slides.length - 1, i));
+      slides.forEach((s, n) => s.classList.toggle('active', n === idx));
+      document.getElementById('slideNumber').textContent = `${idx + 1} / ${slides.length}`;
+      document.getElementById('progress').style.width = `${((idx + 1) / slides.length) * 100}%`;
+      location.hash = `slide-${idx + 1}`;
+    }
+
+    function next() { show(idx + 1); }
+    function prev() { show(idx - 1); }
+
+    document.getElementById('nextBtn').addEventListener('click', next);
+    document.getElementById('prevBtn').addEventListener('click', prev);
+
+    window.addEventListener('keydown', (e) => {
+      if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); next(); }
+      if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+      if (e.key === 'Home') show(0);
+      if (e.key === 'End') show(slides.length - 1);
+    });
+
+    let touchStartX = null;
+    window.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, {passive: true});
+    window.addEventListener('touchend', e => {
+      if (touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) dx < 0 ? next() : prev();
+      touchStartX = null;
+    }, {passive: true});
+
+    const match = location.hash.match(/slide-(\d+)/);
+    if (match) show(parseInt(match[1], 10) - 1); else show(0);
+  </script>
+</body>
+</html>
